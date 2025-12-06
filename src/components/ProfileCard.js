@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ProfileCard({ name, age, occupation, motto }) {
-  const [showInfo, setShowInfo] = useState(false);
+  //   const [showInfo, setShowInfo] = useState(false);
+  const savedShowInfo = JSON.parse(localStorage.getItem("showInfo")) || false;
+  const [showInfo, setShowInfo] = useState(savedShowInfo);
+  const [showSkills, setShowSkills] = useState(false);
+  const [currentMottoIndex, setcurrentMottoIndex] = useState(0);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
+    localStorage.setItem("showInfo", JSON.stringify(!showInfo));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setcurrentMottoIndex((prevIndex) => (prevIndex + 1) % motto.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div style={{ border: "1px solid blue", padding: "10px", width: "200px" }}>
@@ -15,17 +30,33 @@ function ProfileCard({ name, age, occupation, motto }) {
         <div>
           <p>Hobbies: Coding, Basketball</p>
           <p>Location: Your city</p>
-          <p>motto: {motto[currentIndex]}</p>
+          <p>motto: {motto[currentMottoIndex]}</p>
           <button
-            onClick={() => setCurrentIndex((currentIndex + 1) % motto.length)}
+            onClick={() =>
+              setcurrentMottoIndex((currentMottoIndex + 1) % motto.length)
+            }
           >
             Next motto
           </button>
         </div>
       )}
 
-      <button onClick={() => setShowInfo(!showInfo)}>
+      {showSkills && (
+        <div>
+          <h2>Skills</h2>
+          <ul>
+            <li>Video editing</li>
+            <li>Photography</li>
+            <li>Chess</li>
+          </ul>
+        </div>
+      )}
+
+      <button onClick={toggleInfo}>
         {showInfo ? "Hide Info" : "Show Info"}
+      </button>
+      <button onClick={() => setShowSkills(!showSkills)}>
+        {showInfo ? "Hide Skills" : "Show Skills"}
       </button>
     </div>
   );
