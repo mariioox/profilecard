@@ -18,7 +18,7 @@ function ProfileCard({ name, age, occupation, motto }) {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   return (
     <div style={{ border: "1px solid blue", padding: "10px", width: "200px" }}>
