@@ -5,7 +5,7 @@ function ProfileCard({ name, age, occupation, motto }) {
   const savedShowInfo = JSON.parse(localStorage.getItem("showInfo")) || false;
   const [showInfo, setShowInfo] = useState(savedShowInfo);
   const [showSkills, setShowSkills] = useState(false);
-  const [currentMottoIndex, setcurrentMottoIndex] = useState(0);
+  const [currentMottoIndex, setCurrentMottoIndex] = useState(0);
 
   const toggleInfo = () => {
     setShowInfo(!showInfo);
@@ -14,7 +14,7 @@ function ProfileCard({ name, age, occupation, motto }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setcurrentMottoIndex((prevIndex) => (prevIndex + 1) % motto.length);
+      setCurrentMottoIndex((prevIndex) => (prevIndex + 1) % motto.length);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -28,12 +28,12 @@ function ProfileCard({ name, age, occupation, motto }) {
 
       {showInfo && (
         <div>
-          <p>Hobbies: Coding, Basketball</p>
+          <p>Hobbies: Coding, Basketball, Anime</p>
           <p>Location: Your city</p>
           <p>motto: {motto[currentMottoIndex]}</p>
           <button
             onClick={() =>
-              setcurrentMottoIndex((currentMottoIndex + 1) % motto.length)
+              setCurrentMottoIndex((currentMottoIndex + 1) % motto.length)
             }
           >
             Next motto
